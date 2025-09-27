@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Weather App</title>
+  </head>
+  <style>
+    /* ====== Body ====== */
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      margin: 0;
+      color: #f5f5f5;
+    }
+
+    /* ====== Container ====== */
+    .container {
+      width: 360px;
+      padding: 20px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+      transition: transform 0.3s ease-in-out;
+    }
+    .container:hover {
+      transform: scale(1.02);
+    }
+
+    /* ====== Search bar ====== */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 10px 14px;
+      border-radius: 14px;
+      margin-bottom: 20px;
+      transition: 0.3s;
+    }
+    .search-bar:focus-within {
+      background: rgba(0, 234, 255, 0.12);
+      box-shadow: 0 0 10px rgba(0, 234, 255, 0.5);
+    }
+    .search-bar i {
+      color: #00eaff;
+      margin-right: 10px;
+    }
+    .search-bar input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    /* ====== Main weather info ====== */
+    .main-container {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .weather-city {
+      font-size: 24px;
+      font-weight: bold;
+      color: #00eaff;
+    }
+    .date-time {
+      font-size: 13px;
+      color: #bbb;
+      margin-bottom: 10px;
+    }
+    .weather-data {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin: 15px 0;
+    }
+    .forcast {
+      font-size: 16px;
+      margin-right: 10px;
+      color: #fff;
+    }
+    .weather-icon img {
+      width: 90px;
+      height: 90px;
+    }
+    .temperature {
+      font-size: 42px;
+      font-weight: bold;
+      margin: 10px 0;
+      color: #ffcc70;
+      text-shadow: 0 0 10px #ffcc70, 0 0 20px #ffaa00;
+      animation: glow 2s infinite alternate;
+    }
+
+    /* Glow animation for temperature */
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 8px #ffcc70, 0 0 15px #ffaa00;
+      }
+      to {
+        text-shadow: 0 0 20px #ffcc70, 0 0 35px #ffaa00;
+      }
+    }
+
+    .min-max {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #bbb;
+      margin-top: 8px;
+    }
+
+    /* ====== Weather cards ====== */
+    .weather-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .weather-card {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 12px;
+      border-radius: 12px;
+      transition: 0.3s;
+    }
+    .weather-card:hover {
+      background: rgba(0, 234, 255, 0.15);
+      transform: translateY(-3px);
+    }
+    .weather-card i {
+      font-size: 22px;
+      margin-right: 10px;
+      color: #00eaff;
+    }
+    .weather-card p:first-child {
+      font-size: 12px;
+      margin: 0;
+      color: #bbb;
+    }
+    .weather-card p:last-child {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 0;
+      color: #fff;
+    }
+  </style>
+  <body>
+    <section class="container">
+      <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" class="city-name" placeholder="search your city.." />
+      </div>
+
+      <div class="main-container">
+        <h1 class="weather-city"></h1>
+        <p class="date-time"></p>
+        <div class="weather-data">
+          <p class="forcast"></p>
+          <div class="weather-icon"></div>
+        </div>
+        <p class="temperature"></p>
+        <div class="min-max">
+          <p class="min"></p>
+          <p class="max"></p>
+        </div>
+      </div>
+      <section class="weather-info">
+        <div class="weather-card">
+          <i class="fa-solid fa-temperature-low"></i>
+          <div>
+            <p>Feels Like</p>
+            <p class="wrather-fellslike"></p>
+          </div>
+        </div>
+        <div class="weather-card">
+          <i class="fa-solid fa-droplet"></i>
+          <div>
+            <p>Humidity</p>
+            <p class="wrather-humidity"></p>
+          </div>
+        </div>
+        <div class="weather-card">
+          <i class="fa-solid fa-wind"></i>
+          <div>
+            <p>Wind</p>
+            <p class="weather-wind"></p>
+          </div>
+        </div>
+        <div class="weather-card">
+          <i class="fa-solid fa-gauge-high"></i>
+          <div>
+            <p>Presure</p>
+            <p class="weather-presure"></p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <script>
+      let citySearch = document.querySelector(".city-name");
+      let error = document.querySelector(".error");
+      let cityName = document.querySelector(".weather-city");
+      let dateTime = document.querySelector(".date-time");
+      let forcast = document.querySelector(".forcast");
+      let temperature = document.querySelector(".temperature");
+      let weathericon = document.querySelector(".weather-icon");
+      let min = document.querySelector(".min");
+      let max = document.querySelector(".max");
+      let fellslike = document.querySelector(".wrather-fellslike");
+      let wratherhumidity = document.querySelector(".wrather-humidity");
+      let weatherwind = document.querySelector(".weather-wind");
+      let weatherpresure = document.querySelector(".weather-presure");
+
+      const options = {
+        weekly: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+      };
+      let city = "Bahawalpur";
+
+      citySearch.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          city = citySearch.value;
+
+          citySearch.value = "";
+          getdata();
+        }
+      });
+
+      const togetCountry = (code) => {
+        return new Intl.DisplayNames([code], { type: "region" }).of(code);
+      };
+      const getdatetime = (dt) => {
+        const date = new Date(dt * 1000);
+        const formater = new Intl.DateTimeFormat("en-US", options);
+        return formater.format(date);
+      };
+      const getdata = async () => {
+        let API = `https://api.openweathermap.org/data/2.5/weather?q= ${city}&APPID=33d9d9b1293a82e85793688ea3190b0f`;
+        try {
+          const response = await fetch(API);
+          const data = await response.json();
+          const { main, name, weather, wind, sys, dt } = data;
+
+          //name of city and country
+          cityName.textContent = `${city} , ${togetCountry(sys.country)}`;
+
+          //datetime
+
+          dateTime.textContent = getdatetime(dt);
+
+          //temperature
+          temperature.innerHTML = `${main.temp} &#176`;
+          min.innerHTML = `Min: ${main.temp_min.toFixed()} &#176`;
+          max.innerHTML = `Max: ${main.temp_max.toFixed()} &#176`;
+          //weather
+
+          forcast.textContent = weather[0].main;
+          weathericon.innerHTML = `<img src= "http://openweathermap.org/img/wn/${weather[0].icon}@4x.png" />`;
+
+          fellslike.innerHTML = `${main.feels_like.toFixed()} &#176`;
+          wratherhumidity.innerHTML = `${main.humidity.toFixed()} %`;
+          weatherwind.innerHTML = `${wind.speed} m/s`;
+          weatherpresure.innerHTML = `${main.pressure.toFixed()} hPa`;
+        } catch (error) {
+          console.log("not workking...");
+        }
+      };
+      document.body.addEventListener("load", getdata());
+    </script>
+  </body>
+</html>
